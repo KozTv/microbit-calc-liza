@@ -3,6 +3,10 @@ function increment () {
     max = val
     updateDisplay()
     updateMusic()
+    // the following introduces a fun game
+    // "I can guess your number"
+    // requires another device listening on channel 1
+    radio.sendNumber(val)
 }
 input.onLogoEvent(TouchButtonEvent.Pressed, function () { melodyEnabled = !melodyEnabled})
 input.onButtonPressed(Button.A, function () {
@@ -20,9 +24,10 @@ function decrement () {
     if (val <= 0) {
         return
     }
-    val += 0 - 1
+    val--
     updateDisplay()
     updateMusic()
+    radio.sendNumber(val)
 }
 input.onButtonPressed(Button.B, function () {
     increment()
@@ -39,11 +44,11 @@ input.onGesture(Gesture.Shake, function () {
     reset()
 })
 function updateDisplay () {
-    brightness = 0.1
+    const brightness = 0.1
     haloDisplay.clear()
-    range = haloDisplay.range(1, val)
+    const range = haloDisplay.range(1, val)
     range.showColor(kitronik_halo_hd.rgb(153 * brightness, 51 * brightness, 255 * brightness))
-    rangeRemoved = haloDisplay.range(1 + val, max - val)
+    const rangeRemoved = haloDisplay.range(1 + val, max - val)
     rangeRemoved.showColor(kitronik_halo_hd.rgb(255 * brightness, 51 * brightness, 0 * brightness))
     haloDisplay.show()
 }
@@ -59,18 +64,16 @@ function reset () {
     haloDisplay.clear()
     haloDisplay.show()
     melodyPos = 0
+    radio.sendNumber(val)
 }
-let rangeRemoved: kitronik_halo_hd.ZIPHaloHd = null
-let range: kitronik_halo_hd.ZIPHaloHd = null
-let brightness = 0
 let max = 0
 let val = 0
-let haloDisplay: kitronik_halo_hd.ZIPHaloHd = null
-haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
+let haloDisplay = kitronik_halo_hd.createZIPHaloDisplay(60)
 let melody = CustomMelodies.littleStar
 let melodyPos = 0
 let melodyEnabled = false
 music.setVolume(32)
+radio.setGroup(1)
 reset()
 basic.forever(function () {
 	
