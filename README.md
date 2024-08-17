@@ -1,3 +1,8 @@
+## BBC micro:bit + Halo HD calculator for year 1 children
+
+Press B to increment, press A to subtract. The subtraction is displayed with a sepaate color.
+Each button press plays a note of "Twinkle twinkle little star" (can be disabled by pressing the logo button).
+Hidden feature: the current value is sent over radio (channel 1) so you play the "I can guess your number" game.
 
 > Open this page at [https://koztv.github.io/microbit-calc-liza/](https://koztv.github.io/microbit-calc-liza/)
 
